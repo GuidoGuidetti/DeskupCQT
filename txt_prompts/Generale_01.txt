@@ -1,0 +1,13 @@
+Plan A
+
+1. Inserisci la richiesta di conferma in tutte le operazioni di DELETE
+2. Tutti i messaggi non devono contenere l'url es. localhost:3000 ma il solo titolo dell'applicazione = 'DesKup'
+3. Pagina users/edit, non salva la modifica al partner, dopo 'salva' deve rientrare alla pagina users (lista utenti)
+
+
+Plan B
+
+1. Devi aggiungere un campo varchar(50) user_code (Codice Contab Cliente) nella tabella customers e gestirlo nelle pagine insert ed edit
+2. Nella tabella carnets, aggiungi un campo carn_value (Valore) che rapprenta il prezzo totale del carnet; nella pagina carnets insert/update richiedi prima il campo carn_value ed ottieni il campo carn_price = carn_value / carn_qta. Il campo carn_price rimane comunque editabile per forzature.
+3. Nella pagina carnets, aggiungi una icona ad azioni che permetta di duplicare il record e di inserirlo in testa alla grid. E' Possibile rendere la grid attiva permettendo di ordinare per colonna ed effettuare filtri ?
+

@@ -1,0 +1,25 @@
+1) devi creare nel data base una nuova tabella 'activities'con i seguenti campi:
+act_id (identity primary key)
+act_tick_id (join con tick_id della tabella tickets)
+act_cust_id (join con cust_id della tabella customer)
+act_cuscarn_id (join con cuscarn_id della tabella carnets)
+act_description (text lungo, descrizione attività)
+act_response(text, risposta all'utente, se vuoto = act_description)
+act_date (date, data attività = default data corrente)
+act_start_time (time, hh mm ss inizio attività)
+act_end_time  (time, hh mm ss fine attività)
+act_time (tempo impiegato in hh:mm, editabile con default = act_end_time - act_start_time)
+act_unit_qta (qta addebitabile se carn_um (tabella carnets) = G (act_time/8), se = H (act_time), se = T (1)
+act_price = (default carn_price della tabella carnets)
+act_value = (default carn_price * act_unit_qta)
+act_note = (text lungo, note interne)
+act_close = (boolean, chiude il ticket)
+
+2) devi creare la tabella activities_attachments per gestire eventuali allegati della attività a tua discrezione
+
+3) l'icona 'attività' della grid nella pagine tickets, deve aprire una nuova pagina con una grid di tutte le attività in tabella activities, con le icone edit e delete. Serve un pulsante per aprire una nuova pagine di insert nuova attività.
+In questa pagine l'operatore (ricevuto i campi act_tick_id e acr_cust_id dal record tickets selezionato) deve selezionare il carnet (act_cuscarn_id) selezionando in una combo i records customers_carnets del cliente attivo (solo cuscam_active=true); deve poi compilare i campi della tabella come sopra, e deve avere la possibilità di aggiungere allegati. 
+Deve poter annullare e confermare il ticket, alla conferma deve apparire la richiesta di invio mail al mittente del ticket, se sì .. invia una e-mail all'utente che ha creato il ticket con ID e titolo del ticket + campo act_response + carn_um (dove T=Ticket Unit, G=Giornate, H=Ore), act_unit_qta + nota 'Ticket Chiuso' se act_close = true + allegati
+
+
+

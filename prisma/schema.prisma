@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  usr_id      Int       @id @default(autoincrement())
+  usr_name    String?   @db.VarChar(50)
+  usr_mail    String?   @db.VarChar(50)
+  usr_pwd     String?   @db.VarChar(50)
+  usr_role    Int?      @default(2)
+  usr_note    String?
+  usr_cust_id Int?
+  usr_part_id Int?
+  tickets     Ticket[]
+  customer    Customer? @relation(fields: [usr_cust_id], references: [cust_id])
+  partner     Partner?  @relation(fields: [usr_part_id], references: [part_id])
+
+  @@map("users")
+}
+
+model Customer {
+  cust_id          Int                @id @default(autoincrement())
+  cust_name        String?
+  cust_code        String?            @db.VarChar(50)
+  cust_address     String?
+  cust_state       String?            @db.VarChar(20)
+  cust_city        String?            @db.VarChar(50)
+  cust_country     String?            @default("ITALY") @db.VarChar(50)
+  cust_part_id     Int?
+  tickets          Ticket[]
+  users            User[]
+  partner          Partner?           @relation(fields: [cust_part_id], references: [part_id])
+  customerCarnets  CustomerCarnet[]
+  activities       Activity[]
+
+  @@map("customers")
+}
+
+model Carnet {
+  carn_id          Int              @id @default(autoincrement())
+  carn_des         String?
+  carn_um          String?          @db.VarChar(2)
+  carn_qta         Int?
+  carn_value       Decimal?         @db.Decimal
+  carn_price       Decimal?         @db.Decimal
+  carn_note        String?          @db.VarChar
+  carn_type        String?          @default("C") @db.VarChar(1)
+  customerCarnets  CustomerCarnet[]
+
+  @@map("carnets")
+}
+
+model Partner {
+  part_id    Int        @id(map: "partners_pk") @default(autoincrement())
+  part_name  String?    @db.VarChar(80)
+  part_logo  String?    @db.VarChar(80)
+  part_data  String?
+  part_email String?    @db.VarChar(100)
+  users      User[]
+  customers  Customer[]
+
+  @@map("partners")
+}
+
+model Ticket {
+  tick_id          Int                @id @default(autoincrement())
+  tick_title       String             @db.VarChar(255)
+  tick_description String?
+  tick_status      String             @default("open") @db.VarChar(20)
+  tick_priority    String             @default("medium") @db.VarChar(20)
+  tick_usr_id      Int
+  tick_cust_id     Int?
+  tick_created_at  DateTime           @default(now()) @db.Timestamp(6)
+  tick_updated_at  DateTime           @updatedAt @db.Timestamp(6)
+  tick_closed_at   DateTime?          @db.Timestamp(6)
+  tick_note        String?
+  customer         Customer?          @relation(fields: [tick_cust_id], references: [cust_id])
+  user             User               @relation(fields: [tick_usr_id], references: [usr_id])
+  attachments      TicketAttachment[]
+  activities       Activity[]
+
+  @@index([tick_usr_id])
+  @@index([tick_cust_id])
+  @@index([tick_status])
+  @@map("tickets")
+}
+
+model CustomerCarnet {
+  cuscarn_id        Int        @id @default(autoincrement())
+  cuscarn_cust_id   Int?
+  cuscarn_carn_id   Int?
+  cuscarn_datestart DateTime?  @db.Date
+  cuscarn_dateend   DateTime?  @db.Date
+  cuscarn_qtaini    Int?
+  cuscarn_qtaero    Int?
+  cuscarn_note      String?    @db.Text
+  cuscarn_active    Boolean?
+
+  customer   Customer?  @relation(fields: [cuscarn_cust_id], references: [cust_id])
+  carnet     Carnet?    @relation(fields: [cuscarn_carn_id], references: [carn_id])
+  activities Activity[]
+
+  @@map("customers_carnets")
+}
+
+model TicketAttachment {
+  att_id         Int      @id @default(autoincrement())
+  att_tick_id    Int
+  att_filename   String   @db.VarChar(255)
+  att_filepath   String   @db.VarChar(500)
+  att_filesize   Int
+  att_mimetype   String   @db.VarChar(100)
+  att_uploaded_at DateTime @default(now()) @db.Timestamp(6)
+
+  ticket Ticket @relation(fields: [att_tick_id], references: [tick_id], onDelete: Cascade)
+
+  @@index([att_tick_id])
+  @@map("ticket_attachments")
+}
+
+model Activity {
+  act_id          Int       @id @default(autoincrement())
+  act_tick_id     Int
+  act_cust_id     Int
+  act_cuscarn_id  Int
+  act_description String    @db.Text
+  act_response    String?   @db.Text
+  act_date        DateTime  @default(now()) @db.Date
+  act_start_time  DateTime  @db.Time(6)
+  act_end_time    DateTime  @db.Time(6)
+  act_time        Int
+  act_unit_qta    Decimal   @db.Decimal(10,2)
+  act_price       Decimal   @db.Decimal(10,2)
+  act_value       Decimal   @db.Decimal(10,2)
+  act_note        String?   @db.Text
+  act_close       Boolean   @default(false)
+  act_created_at  DateTime  @default(now()) @db.Timestamp(6)
+
+  ticket          Ticket             @relation(fields: [act_tick_id], references: [tick_id], onDelete: Cascade)
+  customer        Customer           @relation(fields: [act_cust_id], references: [cust_id])
+  customerCarnet  CustomerCarnet     @relation(fields: [act_cuscarn_id], references: [cuscarn_id])
+  attachments     ActivityAttachment[]
+
+  @@index([act_tick_id])
+  @@index([act_cust_id])
+  @@index([act_cuscarn_id])
+  @@map("activities")
+}
+
+model ActivityAttachment {
+  act_att_id          Int      @id @default(autoincrement())
+  act_att_act_id      Int
+  act_att_filename    String   @db.VarChar(255)
+  act_att_filepath    String   @db.VarChar(500)
+  act_att_filesize    Int
+  act_att_mimetype    String   @db.VarChar(100)
+  act_att_uploaded_at DateTime @default(now()) @db.Timestamp(6)
+
+  activity Activity @relation(fields: [act_att_act_id], references: [act_id], onDelete: Cascade)
+
+  @@index([act_att_act_id])
+  @@map("activities_attachments")
+}
