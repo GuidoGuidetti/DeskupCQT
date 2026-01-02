@@ -30,6 +30,7 @@ export default async function EditCarnetPage({ params }: { params: Promise<{ id:
           carn_type: carnet.carn_type,
           carn_um: carnet.carn_um,
           carn_qta: carnet.carn_qta,
+          carn_value: carnet.carn_value ? Number(carnet.carn_value) : null,
           carn_price: carnet.carn_price ? Number(carnet.carn_price) : null,
           carn_note: carnet.carn_note,
         }} />

@@ -124,7 +124,7 @@ export default async function ActivitiesPage({ params }: { params: Promise<{ id:
           {ticket.activities.length === 0 ? (
             <div className="p-8 text-center text-gray-500">
               <p className="text-lg">Nessuna attività registrata per questo ticket</p>
-              <p className="text-sm mt-2">Clicca su "Nuova Attività" per iniziare</p>
+              <p className="text-sm mt-2">Clicca su &quot;Nuova Attività&quot; per iniziare</p>
             </div>
           ) : (
             <>

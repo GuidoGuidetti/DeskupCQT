@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { createPartner, updatePartner } from '@/app/actions/partners';
 import { SaveIcon, UploadIcon, XIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -134,9 +135,12 @@ export function PartnerForm({ partner }: PartnerFormProps) {
 
           {logoPreview && (
             <div className="mb-4 relative inline-block">
-              <img
+              <Image
                 src={logoPreview}
                 alt="Logo preview"
+                width={200}
+                height={100}
+                unoptimized
                 className="max-w-[200px] max-h-[100px] object-contain border border-gray-300 rounded-lg"
               />
               <button

@@ -5,10 +5,10 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export default async function EditCustomerPage({ params }: { params: { id: string } }) {
+export default async function EditCustomerPage({ params }: { params: Promise<{ id: string }> }) {
   const session = await requireRole([0, 1]);  // Admin and Partner
 
-  const customerId = parseInt(params.id);
+  const customerId = parseInt((await params).id);
 
   if (isNaN(customerId)) {
     notFound();
@@ -38,7 +38,7 @@ export default async function EditCustomerPage({ params }: { params: { id: strin
           <p className="text-gray-600 mt-1">Aggiorna i dati del cliente</p>
         </div>
 
-        <form action={updateCustomerWithId} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+        <form action={async (formData) => { await updateCustomerWithId(formData); }} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
           <div className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">

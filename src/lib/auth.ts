@@ -9,7 +9,7 @@ export type SessionUser = {
   usr_cust_id: number | null;
   usr_part_id: number | null;
   partner?: {
-    part_name: string;
+    part_name: string | null;
     part_data: string | null;
     part_logo: string | null;
   } | null;

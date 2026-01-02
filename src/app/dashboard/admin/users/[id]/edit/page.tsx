@@ -5,10 +5,10 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export default async function EditUserPage({ params }: { params: { id: string } }) {
+export default async function EditUserPage({ params }: { params: Promise<{ id: string }> }) {
   await requireRole([0]);
 
-  const userId = parseInt(params.id);
+  const userId = parseInt((await params).id);
 
   if (isNaN(userId)) {
     notFound();
@@ -38,10 +38,10 @@ export default async function EditUserPage({ params }: { params: { id: string } 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900">Modifica Utente</h2>
-          <p className="text-gray-600 mt-1">Aggiorna i dati dell'utente</p>
+          <p className="text-gray-600 mt-1">Aggiorna i dati dell&apos;utente</p>
         </div>
 
-        <form action={updateUserWithId} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+        <form action={async (formData) => { await updateUserWithId(formData); }} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>

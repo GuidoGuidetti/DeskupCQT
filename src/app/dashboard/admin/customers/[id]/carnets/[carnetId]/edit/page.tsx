@@ -8,7 +8,7 @@ import { notFound } from 'next/navigation';
 export default async function EditCustomerCarnetPage({
   params,
 }: {
-  params: { id: string; carnetId: string };
+  params: Promise<{ id: string; carnetId: string }>;
 }) {
   await requireRole([0, 1]);  // Admin and Partner
 
@@ -79,7 +79,7 @@ export default async function EditCustomerCarnetPage({
           <p className="text-gray-600 mt-1">Aggiorna i dati del carnet assegnato</p>
         </div>
 
-        <form action={updateCustomerCarnetWithId} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+        <form action={async (formData) => { await updateCustomerCarnetWithId(formData); }} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
           <div className="space-y-6">
             <div>
               <label htmlFor="carnet_id" className="block text-sm font-medium text-gray-700 mb-2">
@@ -113,11 +113,11 @@ export default async function EditCustomerCarnetPage({
                 </div>
                 <div>
                   <span className="text-blue-700 font-medium">Tipo:</span>
-                  <p className="text-blue-900">{translateType(customerCarnet.carnet?.carn_type)}</p>
+                  <p className="text-blue-900">{translateType(customerCarnet.carnet?.carn_type ?? null)}</p>
                 </div>
                 <div>
                   <span className="text-blue-700 font-medium">Unità di Misura:</span>
-                  <p className="text-blue-900">{translateUM(customerCarnet.carnet?.carn_um)}</p>
+                  <p className="text-blue-900">{translateUM(customerCarnet.carnet?.carn_um ?? null)}</p>
                 </div>
                 <div>
                   <span className="text-blue-700 font-medium">Prezzo:</span>

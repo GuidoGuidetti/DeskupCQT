@@ -20,7 +20,7 @@ export default async function NewCustomerPage() {
           <p className="text-gray-600 mt-1">Aggiungi un nuovo cliente al sistema</p>
         </div>
 
-        <form action={createCustomer} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+        <form action={async (formData) => { await createCustomer(formData); }} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
           <div className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">

@@ -23,7 +23,7 @@ export default async function NewUserPage() {
           <p className="text-gray-600 mt-1">Aggiungi un nuovo utente al sistema</p>
         </div>
 
-        <form action={createUser} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+        <form action={async (formData) => { await createUser(formData); }} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>

@@ -6,7 +6,7 @@ import { PlusCircleIcon, ArrowLeftIcon } from 'lucide-react';
 import { CustomerCarnetActions } from '@/components/customer-carnet-actions';
 import { notFound } from 'next/navigation';
 
-export default async function CustomerCarnetsPage({ params }: { params: { id: string } }) {
+export default async function CustomerCarnetsPage({ params }: { params: Promise<{ id: string }> }) {
   await requireRole([0, 1]);  // Admin and Partner
 
   const customerId = parseInt((await params).id);

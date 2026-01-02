@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export default async function NewCustomerCarnetPage({ params }: { params: { id: string } }) {
+export default async function NewCustomerCarnetPage({ params }: { params: Promise<{ id: string }> }) {
   await requireRole([0, 1]);  // Admin and Partner
 
   const customerId = parseInt((await params).id);
@@ -37,7 +37,7 @@ export default async function NewCustomerCarnetPage({ params }: { params: { id: 
           <p className="text-gray-600 mt-1">Assegna un nuovo carnet al cliente</p>
         </div>
 
-        <form action={createCustomerCarnetWithId} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+        <form action={async (formData) => { await createCustomerCarnetWithId(formData); }} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
           <div className="space-y-6">
             <div>
               <label htmlFor="carnet_id" className="block text-sm font-medium text-gray-700 mb-2">

@@ -33,7 +33,7 @@ export default async function LoginPage() {
           <p className="text-gray-600">Sistema di Gestione Tickets</p>
         </div>
 
-        <form action={login} className="space-y-6">
+        <form action={async (formData) => { await login(formData); }} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
               Email

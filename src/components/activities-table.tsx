@@ -36,7 +36,7 @@ type ActivityWithRelations = {
     carnet: {
       carn_um: string | null;
       carn_type: string | null;
-    };
+    } | null;
   };
 };
 

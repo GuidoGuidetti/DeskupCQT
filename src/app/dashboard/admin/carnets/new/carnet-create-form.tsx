@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 interface CarnetCreateFormProps {
-  createAction: (formData: FormData) => Promise<void>;
+  createAction: (formData: FormData) => Promise<void | { error: string }>;
 }
 
 export function CarnetCreateForm({ createAction }: CarnetCreateFormProps) {
@@ -12,6 +12,11 @@ export function CarnetCreateForm({ createAction }: CarnetCreateFormProps) {
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [priceOverridden, setPriceOverridden] = useState(false);
+
+  // Wrapper to handle server action return type
+  const handleSubmit = async (formData: FormData) => {
+    await createAction(formData);
+  };
 
   // Auto-calcolo: price = value / quantity
   useEffect(() => {
@@ -23,7 +28,7 @@ export function CarnetCreateForm({ createAction }: CarnetCreateFormProps) {
   }, [value, quantity, priceOverridden]);
 
   return (
-    <form action={createAction} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+    <form action={handleSubmit} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
       <div className="space-y-6">
         <div>
           <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">

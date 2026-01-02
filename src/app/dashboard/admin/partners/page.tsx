@@ -2,6 +2,7 @@ import { requireRole } from '@/lib/auth';
 import { DashboardLayout } from '@/components/dashboard-layout';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
+import Image from 'next/image';
 import { PlusCircleIcon, EditIcon, ImageIcon } from 'lucide-react';
 import { DeletePartnerButton } from '@/components/delete-partner-button';
 
@@ -72,7 +73,7 @@ export default async function PartnersPage() {
                     </td>
                     <td className="px-4 py-4">
                       {partner.part_logo ? (
-                        <img
+                        <Image
                           src={partner.part_logo.startsWith('/') ? partner.part_logo : `/${partner.part_logo}`}
                           alt={partner.part_name || 'Logo'}
                           width={60}

@@ -154,17 +154,17 @@ export function ActivityForm({
         {/* Response */}
         <div>
           <label htmlFor="act_response" className="block text-sm font-medium text-gray-700 mb-2">
-            Risposta all'Utente
+            Risposta all&apos;Utente
           </label>
           <textarea
             id="act_response"
             name="act_response"
             rows={4}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
-            placeholder="Se vuoto, verrà utilizzata la descrizione dell'attività"
+            placeholder="Se vuoto, verrà utilizzata la descrizione dell&apos;attività"
           />
           <p className="mt-1 text-xs text-gray-500">
-            Questo testo sarà inviato via email all'utente che ha creato il ticket
+            Questo testo sarà inviato via email all&apos;utente che ha creato il ticket
           </p>
         </div>
 
@@ -328,7 +328,7 @@ export function ActivityForm({
             className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
           />
           <label htmlFor="send_email" className="text-sm font-medium text-green-900">
-            Invia notifica email all'utente che ha creato il ticket
+            Invia notifica email all&apos;utente che ha creato il ticket
           </label>
         </div>
 
