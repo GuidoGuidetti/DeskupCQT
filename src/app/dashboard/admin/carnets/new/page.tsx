@@ -6,6 +6,11 @@ import { CarnetCreateForm } from './carnet-create-form';
 export default async function NewCarnetPage() {
   await requireRole([0, 1]);  // Admin and Partner
 
+  async function handleCreateCarnet(formData: FormData) {
+    'use server';
+    return await createCarnet(formData);
+  }
+
   return (
     <DashboardLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -14,7 +19,7 @@ export default async function NewCarnetPage() {
           <p className="text-gray-600 mt-1">Aggiungi un nuovo carnet al sistema</p>
         </div>
 
-        <CarnetCreateForm createAction={createCarnet} />
+        <CarnetCreateForm createAction={handleCreateCarnet} />
       </div>
     </DashboardLayout>
   );
