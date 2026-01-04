@@ -1,6 +1,9 @@
+Application error: a server-side exception has occurred while loading deskupcqtonline-jdfvh8b28-guidoguidettis-projects.vercel.app (see the server logs for more information).
+Digest: 3385076909
+
+
 Error: Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with "use server". Or maybe you meant to call this function rather than return it.
   {action: function action, className: ..., children: ...}
            ^^^^^^^^^^^^^^^
     at stringify (<anonymous>) {
   digest: '3385076909'
-}

@@ -30,8 +30,10 @@ export default async function EditUserPage({ params }: { params: Promise<{ id: s
     orderBy: { part_name: 'asc' },
   });
 
-  // Create a bound version of updateUser with the user ID
-  const updateUserWithId = updateUser.bind(null, userId);
+  async function handleUpdateUser(formData: FormData) {
+    'use server';
+    await updateUser(userId, formData);
+  }
 
   return (
     <DashboardLayout>
@@ -41,7 +43,7 @@ export default async function EditUserPage({ params }: { params: Promise<{ id: s
           <p className="text-gray-600 mt-1">Aggiorna i dati dell&apos;utente</p>
         </div>
 
-        <form action={async (formData) => { await updateUserWithId(formData); }} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+        <form action={handleUpdateUser} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>

@@ -15,6 +15,11 @@ export default async function NewUserPage() {
     orderBy: { part_name: 'asc' },
   });
 
+  async function handleCreateUser(formData: FormData) {
+    'use server';
+    await createUser(formData);
+  }
+
   return (
     <DashboardLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -23,7 +28,7 @@ export default async function NewUserPage() {
           <p className="text-gray-600 mt-1">Aggiungi un nuovo utente al sistema</p>
         </div>
 
-        <form action={async (formData) => { await createUser(formData); }} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+        <form action={handleCreateUser} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>

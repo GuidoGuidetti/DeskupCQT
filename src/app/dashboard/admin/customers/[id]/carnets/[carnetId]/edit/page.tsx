@@ -42,8 +42,10 @@ export default async function EditCustomerCarnetPage({
     orderBy: { carn_des: 'asc' },
   });
 
-  // Create a bound version with IDs
-  const updateCustomerCarnetWithId = updateCustomerCarnet.bind(null, customerCarnetId, customerId);
+  async function handleUpdateCustomerCarnet(formData: FormData) {
+    'use server';
+    await updateCustomerCarnet(customerCarnetId, customerId, formData);
+  }
 
   // Format dates for input fields
   const formatDate = (date: Date | null) => {
@@ -79,7 +81,7 @@ export default async function EditCustomerCarnetPage({
           <p className="text-gray-600 mt-1">Aggiorna i dati del carnet assegnato</p>
         </div>
 
-        <form action={async (formData) => { await updateCustomerCarnetWithId(formData); }} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+        <form action={handleUpdateCustomerCarnet} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
           <div className="space-y-6">
             <div>
               <label htmlFor="carnet_id" className="block text-sm font-medium text-gray-700 mb-2">

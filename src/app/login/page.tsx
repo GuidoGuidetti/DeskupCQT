@@ -15,6 +15,11 @@ export default async function LoginPage() {
     }
   }
 
+  async function handleLogin(formData: FormData) {
+    'use server';
+    await login(formData);
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-500 to-primary-700">
       <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
@@ -33,7 +38,7 @@ export default async function LoginPage() {
           <p className="text-gray-600">Sistema di Gestione Tickets</p>
         </div>
 
-        <form action={async (formData) => { await login(formData); }} className="space-y-6">
+        <form action={handleLogin} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
               Email

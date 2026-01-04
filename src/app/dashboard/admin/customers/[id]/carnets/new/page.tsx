@@ -26,8 +26,10 @@ export default async function NewCustomerCarnetPage({ params }: { params: Promis
     orderBy: { carn_des: 'asc' },
   });
 
-  // Create a bound version with customerId
-  const createCustomerCarnetWithId = createCustomerCarnet.bind(null, customerId);
+  async function handleCreateCustomerCarnet(formData: FormData) {
+    'use server';
+    await createCustomerCarnet(customerId, formData);
+  }
 
   return (
     <DashboardLayout>
@@ -37,7 +39,7 @@ export default async function NewCustomerCarnetPage({ params }: { params: Promis
           <p className="text-gray-600 mt-1">Assegna un nuovo carnet al cliente</p>
         </div>
 
-        <form action={async (formData) => { await createCustomerCarnetWithId(formData); }} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+        <form action={handleCreateCustomerCarnet} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
           <div className="space-y-6">
             <div>
               <label htmlFor="carnet_id" className="block text-sm font-medium text-gray-700 mb-2">

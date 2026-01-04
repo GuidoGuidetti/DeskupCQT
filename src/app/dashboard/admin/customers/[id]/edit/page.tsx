@@ -27,8 +27,10 @@ export default async function EditCustomerPage({ params }: { params: Promise<{ i
     orderBy: { part_name: 'asc' },
   });
 
-  // Create a bound version of updateCustomer with the customer ID
-  const updateCustomerWithId = updateCustomer.bind(null, customerId);
+  async function handleUpdateCustomer(formData: FormData) {
+    'use server';
+    await updateCustomer(customerId, formData);
+  }
 
   return (
     <DashboardLayout>
@@ -38,7 +40,7 @@ export default async function EditCustomerPage({ params }: { params: Promise<{ i
           <p className="text-gray-600 mt-1">Aggiorna i dati del cliente</p>
         </div>
 
-        <form action={async (formData) => { await updateCustomerWithId(formData); }} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+        <form action={handleUpdateCustomer} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
           <div className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">

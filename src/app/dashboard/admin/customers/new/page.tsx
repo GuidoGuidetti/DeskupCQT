@@ -12,6 +12,11 @@ export default async function NewCustomerPage() {
     orderBy: { part_name: 'asc' },
   });
 
+  async function handleCreateCustomer(formData: FormData) {
+    'use server';
+    await createCustomer(formData);
+  }
+
   return (
     <DashboardLayout>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -20,7 +25,7 @@ export default async function NewCustomerPage() {
           <p className="text-gray-600 mt-1">Aggiungi un nuovo cliente al sistema</p>
         </div>
 
-        <form action={async (formData) => { await createCustomer(formData); }} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+        <form action={handleCreateCustomer} className="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
           <div className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
