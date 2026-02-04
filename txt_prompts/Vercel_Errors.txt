@@ -1,9 +1,22 @@
-Application error: a server-side exception has occurred while loading deskupcqtonline-jdfvh8b28-guidoguidettis-projects.vercel.app (see the server logs for more information).
-Digest: 3385076909
+Application error: a server-side exception has occurred while loading deskupcqtonline-3hk6qz2dv-guidoguidettis-projects.vercel.app (see the server logs for more information).
+Digest: 2030577114
+2026-01-04 08:14:16.232 [error] Error [PrismaClientInitializationError]: 
+Invalid `prisma.user.findFirst()` invocation:
 
 
-Error: Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with "use server". Or maybe you meant to call this function rather than return it.
-  {action: function action, className: ..., children: ...}
-           ^^^^^^^^^^^^^^^
-    at stringify (<anonymous>) {
-  digest: '3385076909'
+error: Environment variable not found: DATABASE_URL.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+    at <unknown> (-->  schema.prisma:7)
+    at async h (.next/server/app/login/page.js:1:3710)
+    at async j (.next/server/app/login/page.js:1:665) {
+  clientVersion: '6.19.1',
+  errorCode: undefined,
+  retryable: undefined,
+  digest: '2030577114'
+}
